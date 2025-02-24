@@ -1,0 +1,22 @@
+.filters .form-inline input {
+    max-width: 200px;
+}
+.pagination span {
+    font-weight: bold;
+}
+
+.table td {
+    background-color: var(--color-primary);
+    color: var(--color-light-3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-light-3);
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #BB2D3B;
+}

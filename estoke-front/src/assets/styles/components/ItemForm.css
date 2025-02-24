@@ -1,0 +1,17 @@
+.is-invalid {
+    border-color: var(--color-danger) !important;
+}
+
+.text-danger {
+    color: var(--color-danger);
+    font-size: 0.875rem;
+}
+
+.btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
