@@ -1,0 +1,451 @@
+{
+	"info": {
+		"_postman_id": "182c6244-48a7-45f3-8ef4-5cc25d9f2189",
+		"name": "Estoke",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28201135"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "📥 Caso 1: Criação Válida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"A1B2C3\",\r\n  \"descricao\": \"Furadeira profissional\",\r\n  \"localizacao\": \"Armário 5, Setor B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 2: Código do Item Inválido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"A1@B2\", // Caractere especial inválido\r\n  \"descricao\": \"Furadeira\",\r\n  \"localizacao\": \"Setor 5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 3: Número de Série Incorreto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"TOOL001\",\r\n  \"descricao\": \"Serra elétrica\",\r\n  \"localizacao\": \"Prateleira 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 4: Disponibilidade Inválida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"A1B2C3\",\r\n  \"disponibilidade\": \"X\", // Valor não permitido\r\n  \"status\": \"A\",\r\n  \"descricao\": \"Furadeira profissional\",\r\n  \"localizacao\": \"Armário 5, Setor B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 5: Status Inválido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"A1B2C3\",\r\n  \"disponibilidade\": \"D\",\r\n  \"status\": \"B\",  // Valor não permitido\r\n  \"descricao\": \"Furadeira profissional\",\r\n  \"localizacao\": \"Armário 5, Setor B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 6: Campos Obrigatórios Faltantes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroSerie\": \"98765\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 7: ID Informado em POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 10, // ID não permitido em POST\r\n  \"codigoItem\": \"TOOL003\",\r\n  \"descricao\": \"Alicate\",\r\n  \"localizacao\": \"Gaveta 7\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "⚠️ Caso 8: Conflito de Código de Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigoItem\": \"A1B2C3\", // Já existente no banco\r\n  \"descricao\": \"Furadeira profissional\",\r\n  \"localizacao\": \"Armário 5, Setor B\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "📋 Caso 1: Listar Itens com Filtros Válidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario?codigoItem=A1&disponibilidade=D&status=A&pagina=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							],
+							"query": [
+								{
+									"key": "codigoItem",
+									"value": "A1"
+								},
+								{
+									"key": "disponibilidade",
+									"value": "D"
+								},
+								{
+									"key": "status",
+									"value": "A"
+								},
+								{
+									"key": "pagina",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🔎 Caso 2: Listar Itens com Filtros Sem Resultados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario?codigoItem=INVALIDO&disponibilidade=I&status=I&pagina=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							],
+							"query": [
+								{
+									"key": "codigoItem",
+									"value": "INVALIDO"
+								},
+								{
+									"key": "disponibilidade",
+									"value": "I"
+								},
+								{
+									"key": "status",
+									"value": "I"
+								},
+								{
+									"key": "pagina",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "⚠️ Caso 3: Listar com Parâmetros Inválidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario?codigoItem=INVALIDO&disponibilidade=X&status=Y",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							],
+							"query": [
+								{
+									"key": "codigoItem",
+									"value": "INVALIDO"
+								},
+								{
+									"key": "disponibilidade",
+									"value": "X"
+								},
+								{
+									"key": "status",
+									"value": "Y"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🔍 Caso 4: Buscar Próximo número de série",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario/proximo-numero-serie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario",
+								"proximo-numero-serie"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "📥 Caso 1: Atualização Válida",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 6,\r\n  \"codigoItem\": \"A1B2C3\",\r\n  \"numeroSerie\": \"12345\",\r\n  \"descricao\": \"Furadeira\",\r\n  \"localizacao\": \"Armário 5, Setor B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "📥 Caso 1: Exclusão Válida",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario/id/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario",
+								"id",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "🚫 Caso 2: Exclusão Inválida",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itens-inventario/id/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itens-inventario",
+								"id",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
