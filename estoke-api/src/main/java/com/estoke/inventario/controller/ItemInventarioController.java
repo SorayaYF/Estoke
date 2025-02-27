@@ -89,7 +89,7 @@ public class ItemInventarioController {
             @RequestParam(name = "pagina")
             Optional<Integer> pagina){
         Pageable paginacao = null;
-        paginacao = pagina.map(integer -> PageRequest.of(integer, 10)).orElseGet(() -> PageRequest.of(0, 10));
+        paginacao = pagina.map(integer -> PageRequest.of(integer, 5)).orElseGet(() -> PageRequest.of(0, 5));
         Page<ItemInventario> itens = null;
         if(codigoitem == null){
             itens = service.listarPor(disponibilidade, status, paginacao);

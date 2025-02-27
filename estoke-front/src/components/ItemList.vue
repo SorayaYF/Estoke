@@ -9,20 +9,33 @@
             type="text"
             placeholder="Pesquisar por Código"
             class="form-control mr-2"
-            @input="aplicarFiltros"
+            @input="onFilterInput"
         />
-        <select v-model="filtros.disponibilidade" class="form-control mr-2" @change="aplicarFiltros">
-          <option value="D">Disponível</option>
-          <option value="I">Indisponível</option>
+        <select
+            v-model="filtros.disponibilidade"
+            class="form-control mr-2"
+            @change="aplicarFiltros"
+        >
+          <option :value="Disponibilidade.DISPONIVEL">Disponível</option>
+          <option :value="Disponibilidade.INDISPONIVEL">Indisponível</option>
         </select>
-        <select v-model="filtros.status" class="form-control mr-2" @change="aplicarFiltros">
-          <option value="A">Ativo</option>
-          <option value="I">Inativo</option>
+
+        <select
+            v-model="filtros.status"
+            class="form-control mr-2"
+            @change="aplicarFiltros"
+        >
+          <option :value="Status.ATIVO">Ativo</option>
+          <option :value="Status.INATIVO">Inativo</option>
         </select>
       </div>
     </div>
 
-    <table class="table table-bordered mt-3">
+    <div v-if="loading" class="text-center my-3">
+      <span>Carregando itens...</span>
+    </div>
+
+    <table v-else class="table table-bordered mt-3">
       <thead>
       <tr>
         <th>Código</th>
@@ -45,10 +58,10 @@
         <td>{{ item.localizacao }}</td>
         <td>{{ item.dataMovimentacao }}</td>
         <td>
-          <button class="btn btn-sm btn-primary mr-2" @click="editarItem(item)">
+          <button class="btn btn-sm btn-primary mr-2" @click="handleEdit(item)">
             <img src="@/assets/icons/lapis.svg" alt="Editar" style="width:16px; height:16px;" />
           </button>
-          <button class="btn btn-sm btn-danger" @click="excluirItem(item.id)">
+          <button class="btn btn-sm btn-danger" @click="handleExclude(item.id)">
             <img src="@/assets/icons/lixeira.svg" alt="Excluir" style="width:16px; height:16px;" />
           </button>
         </td>
@@ -68,79 +81,35 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import { itemService } from '../services/api'
+<script lang="ts" setup>
+import {defineEmits, onMounted} from 'vue'
+import {Item} from "@/modules/itens/item.interface";
+import {useItemList} from "@/components/scripts/useItemList";
+import {Disponibilidade} from "@/modules/itens/enums/disponibilidade.enum";
+import {Status} from "@/modules/itens/enums/status.enum";
 
-export default Vue.extend({
-  name: 'ItemList',
-  data() {
-    return {
-      itens: [] as any[],
-      filtros: {
-        codigoItem: '',
-        disponibilidade: 'D',
-        status: 'A'
-      },
-      currentPage: 0,
-      totalPages: 1
-    }
-  },
-  methods: {
-    async carregarItens() {
-      try {
-        const params: any = {
-          pagina: this.currentPage,
-          disponibilidade: this.filtros.disponibilidade,
-          status: this.filtros.status
-        }
-        if (this.filtros.codigoItem.trim() !== '') {
-          params.codigoItem = this.filtros.codigoItem.trim()
-        }
-        const response = await itemService.listarPor(params)
-        this.itens = response.data.listagem
-        this.currentPage = response.data.currentPage || 0
-        this.totalPages = response.data.totalPages || 1
-      } catch (error) {
-        console.error('Erro ao carregar itens:', error)
-      }
-    },
-    aplicarFiltros() {
-      this.currentPage = 0
-      this.carregarItens()
-    },
-    editarItem(item: any) {
-      this.$emit('editar', item)
-    },
-    async excluirItem(id: number) {
-      if (!confirm('Tem certeza que deseja excluir este item?')) {
-        return
-      }
-      try {
-        await itemService.excluirPor(id)
-        alert('Item excluído (inativado) com sucesso!')
-        this.carregarItens()
-      } catch (error) {
-        console.error('Erro ao excluir item:', error)
-      }
-    },
-    paginaAnterior() {
-      if (this.currentPage > 0) {
-        this.currentPage--
-        this.carregarItens()
-      }
-    },
-    paginaProxima() {
-      if (this.currentPage + 1 < this.totalPages) {
-        this.currentPage++
-        this.carregarItens()
-      }
-    }
-  },
-  mounted() {
-    this.carregarItens()
-  }
-})
+const emit = defineEmits<{
+  (e: 'editar', item: Item): void
+}>()
+
+const {
+  itens,
+  loading,
+  filtros,
+  currentPage,
+  totalPages,
+  carregarItens,
+  onFilterInput,
+  aplicarFiltros,
+  handleExclude,
+  handleEdit,
+  paginaAnterior,
+  paginaProxima
+} = useItemList(emit)
+
+defineExpose({ carregarItens })
+
+onMounted(() => carregarItens())
 </script>
 
 <style src="@/assets/styles/components/ItemList.css"></style>

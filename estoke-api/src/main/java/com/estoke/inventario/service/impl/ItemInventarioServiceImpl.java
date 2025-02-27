@@ -33,7 +33,7 @@ public class ItemInventarioServiceImpl implements ItemInventarioService {
             String numeroSerieGerado = String.format("%05d", proximo);
             itemInventario.setNumeroSerie(numeroSerieGerado);
         } else {
-            repository.findById(itemInventario.getId()).ifPresent(existente -> Preconditions.checkArgument(!existente.getNumeroSerie().equals(itemInventario.getNumeroSerie()),
+            repository.findById(itemInventario.getId()).ifPresent(existente -> Preconditions.checkArgument(existente.getNumeroSerie().equals(itemInventario.getNumeroSerie()),
                     "Não é permitido alterar o número de série de um item existente"));
         }
         return repository.save(itemInventario);

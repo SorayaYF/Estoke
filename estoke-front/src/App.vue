@@ -10,55 +10,57 @@
         <button class="btn btn-primary" @click="criarNovo">
           Novo Item
         </button>
-        <ItemForm
-            v-if="mostrarForm"
-            :itemEdicao="itemParaEdicao"
-            @salvouItem="quandoSalvar"
-        />
+        <ItemForm v-if="mostrarForm" :itemEdicao="itemParaEdicao" @salvouItem="quandoSalvar" />
       </section>
 
       <section class="app-list">
-        <ItemList
-            @editar="abrirEdicao"
-            ref="listagem"
-        />
+        <ItemList @editar="abrirEdicao" ref="listagemRef" />
       </section>
     </main>
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import ItemList from './components/ItemList.vue'
-import ItemForm from './components/ItemForm.vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
+import type { Item } from '@/modules/itens/item.interface'
+import ItemList from '@/components/ItemList.vue'
+import ItemForm from '@/components/ItemForm.vue'
+import {Disponibilidade} from "@/modules/itens/enums/disponibilidade.enum";
+import {Status} from "@/modules/itens/enums/status.enum";
 
-export default Vue.extend({
-  name: 'App',
-  components: {
-    ItemList,
-    ItemForm
-  },
-  data() {
-    return {
-      mostrarForm: false,
-      itemParaEdicao: {}
-    }
-  },
-  methods: {
-    criarNovo() {
-      this.itemParaEdicao = {}
-      this.mostrarForm = true
-    },
-    abrirEdicao(item: any) {
-      this.itemParaEdicao = { ...item }
-      this.mostrarForm = true
-    },
-    quandoSalvar() {
-      (this.$refs.listagem as any).carregarItens()
-      this.mostrarForm = false
-    }
+const listagemRef = ref<InstanceType<typeof ItemList> | null>(null)
+
+const mostrarForm = ref(false)
+const itemParaEdicao = ref<Item>({} as Item)
+
+const criarNovo = () => {
+  itemParaEdicao.value = {
+    id: null,
+    codigoItem: '',
+    numeroSerie: '',
+    disponibilidade: Disponibilidade.DISPONIVEL,
+    status: Status.ATIVO,
+    descricao: '',
+    localizacao: '',
+    dataMovimentacao: ''
   }
-})
+  mostrarForm.value = false
+  setTimeout(() => {
+    mostrarForm.value = true
+  }, 0)
+}
+
+const abrirEdicao = (item: Item) => {
+  itemParaEdicao.value = { ...item }
+  mostrarForm.value = true
+}
+
+const quandoSalvar = () => {
+  if (listagemRef.value) {
+    listagemRef.value.carregarItens()
+  }
+  mostrarForm.value = false
+}
 </script>
 
 <style src="@/assets/styles/components/App.css"></style>
