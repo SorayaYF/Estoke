@@ -4,7 +4,7 @@
 ![Maven](https://img.shields.io/badge/Maven-3.9.9-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Guava](https://img.shields.io/badge/Guava-33.4.0-0A66C2?style=for-the-badge)
-![Vue.js](https://img.shields.io/badge/Vue-2.7.0-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue-3.5.13-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-0.20.0-5A29E4?style=for-the-badge)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-4.6.0-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![jQuery](https://img.shields.io/badge/jQuery-3.7.1-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
